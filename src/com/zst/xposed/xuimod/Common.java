@@ -16,8 +16,6 @@
 
 package com.zst.xposed.xuimod;
 
-import java.lang.reflect.Field;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,14 +36,17 @@ public class Common {
 	public static final String COLOR_HOLO_BLUE = "FF33B5E5";
 	
 	/* Preference keys */
+	public static final String KEY_SECONDS_MASTER_SWITCH = "seconds_master_switch";
 	public static final String KEY_SECONDS_ENABLE = "seconds_enable";
 	public static final String KEY_SECONDS_BOLD = "seconds_bold";
+	public static final String KEY_SECONDS_SIZE = "seconds_size";
 	public static final String KEY_SECONDS_CUSTOM = "seconds_custom";
 	public static final String KEY_SECONDS_USE_HTML = "seconds_use_html";
 	public static final String KEY_SECONDS_LETTER_CASE = "seconds_lettercase";
 	
 	public static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";
 	public static final String KEY_LISTVIEW_ANIMATION = "listview_animation";
+	public static final String KEY_LISTVIEW_ANIMATE_ONCE = "listview_animate_once";
 	public static final String KEY_LISTVIEW_CACHE = "listview_cache";
 	public static final String KEY_LISTVIEW_DURATION = "listview_duration";
 	public static final String KEY_LISTVIEW_BLACKLIST = "listview_blacklist";
@@ -144,14 +145,17 @@ public class Common {
 	public static final String KEY_SCROLLING_GLOW_EDGE = "scrolling_glow_edge";
 
 	/* Preference default values */
+	public static final boolean DEFAULT_SECONDS_MASTER_SWITCH = false;
 	public static final boolean DEFAULT_SECONDS_ENABLE = false;
 	public static final boolean DEFAULT_SECONDS_BOLD = false;
+	public static final int DEFAULT_SECONDS_SIZE = 100;
 	public static final String DEFAULT_SECONDS_CUSTOM = "";
 	public static final boolean DEFAULT_SECONDS_USE_HTML = false;
 	public static final String DEFAULT_SECONDS_LETTER_CASE = "0";
 	
 	public static final String DEFAULT_LISTVIEW_INTERPOLATOR = "0";
 	public static final String DEFAULT_LISTVIEW_ANIMATION = "0";
+	public static final boolean DEFAULT_LISTVIEW_ANIMATE_ONCE = false;
 	public static final String DEFAULT_LISTVIEW_CACHE = "0";
 	public static final int DEFAULT_LISTVIEW_DURATION = 500;
 	
@@ -240,37 +244,6 @@ public class Common {
 		/* The 1 second delay is to give enough time for system to write the
 		 * preferences. When the preference is read while it's being written,
 		 * the hooks might retrieve the wrong value. */
-	}
-	
-	/* Helper Methods */
-	public static Object getReflection(Object itemToGetObject, String objectName) {
-		try {
-			Class<?> clazz = itemToGetObject.getClass();
-			Field field;
-			field = clazz.getDeclaredField(objectName);
-			field.setAccessible(true);
-			return field.get(itemToGetObject);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	/*
-	 * @param return true when successful
-	 */
-	public static boolean setReflection(Object itemToGetObject, String objectName, Object newValue) {
-		try {
-			Class<?> clazz = itemToGetObject.getClass();
-			Field field;
-			field = clazz.getDeclaredField(objectName);
-			field.setAccessible(true);
-			field.set(itemToGetObject, newValue);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
 	}
 	
 	public static int parseColorFromString(String str, String defColorWithoutSymbols) {
